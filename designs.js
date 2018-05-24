@@ -1,13 +1,9 @@
-// Select color input
-const color = document.querySelector('#colorPicker');
-// Select size input
+const colorPicker = {
+	obj: document.getElementById('colorPicker'),
+	color: document.getElementById('colorPicker').value
+};
 
-// When size is submitted by the user, call makeGrid()
 const button = document.querySelector('input[type="submit"]');
-button.addEventListener("click", function(e) {
-		e.preventDefault();
-		makeGrid();
-	});
 
 function makeGrid() {
   	// Your code goes here!
@@ -35,4 +31,32 @@ function makeGrid() {
 	
 	// add table to document
 	document.querySelector('#pixelCanvas').appendChild(tbody);
+	tbody.setAttribute("id", "evtContainer")
 };
+
+function pickColor() {
+	colorPicker.obj.addEventListener("change", function() {
+		colorPicker.color = document.querySelector('#colorPicker').value;
+		console.log(colorPicker.color);
+	});
+};
+
+function painter() {
+	const pixelCanvas = document.getElementById('evtContainer');
+	pixelCanvas.addEventListener("click", function(e) {
+		e.target.style.backgroundColor = colorPicker.color;
+	});
+};
+
+// main
+document.addEventListener("DOMContentLoaded", function() {
+
+	// When size is submitted by the user, call makeGrid()
+	button.addEventListener("click", function(e) {
+		e.preventDefault();
+		makeGrid();
+		pickColor();
+		console.log(colorPicker.color);
+		painter();
+	});
+})
