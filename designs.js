@@ -51,7 +51,7 @@ function painter() {
 // main
 document.addEventListener("DOMContentLoaded", function() {
 
-	// When size is submitted by the user, call makeGrid()
+	// When size is submitted by the user, call all appropriate functions
 	button.addEventListener("click", function(e) {
 		e.preventDefault();
 		makeGrid();
