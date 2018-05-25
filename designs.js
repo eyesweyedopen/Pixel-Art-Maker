@@ -45,7 +45,7 @@ function pickColor() {
 // activates "paintbrush"
 function painter() {
 	const pixelCanvas = document.getElementById('evtContainer');
-	pixelCanvas.addEventListener("click", function(e) {
+	pixelCanvas.addEventListener("mousedown", function(e) {
 		e.stopPropagation();
 		e.target.style.backgroundColor = colorPicker.color;
 		console.log(colorPicker.color);
