@@ -34,6 +34,7 @@ function makeGrid() {
 	tbody.setAttribute("id", "evtContainer")
 };
 
+// picks color dynamically
 function pickColor() {
 	colorPicker.obj.addEventListener("change", function() {
 		colorPicker.color = document.querySelector('#colorPicker').value;
@@ -41,10 +42,12 @@ function pickColor() {
 	});
 };
 
+// activates "paintbrush"
 function painter() {
 	const pixelCanvas = document.getElementById('evtContainer');
 	pixelCanvas.addEventListener("click", function(e) {
 		e.target.style.backgroundColor = colorPicker.color;
+		console.log(colorPicker.color);
 	});
 };
 
@@ -56,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		e.preventDefault();
 		makeGrid();
 		pickColor();
-		console.log(colorPicker.color);
 		painter();
 	});
 })
