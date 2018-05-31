@@ -1,65 +1,45 @@
-const colorPicker = {
-	obj: document.getElementById('colorPicker'),
-	color: document.getElementById('colorPicker').value
-};
+function makeGrid(height, width) {
 
-const button = document.querySelector('input[type="submit"]');
+	// conditional reset to prevent persistent grids
+	if (document.querySelector("#pixelCanvas").firstChild) {
+		document.querySelector("#pixelCanvas").firstChild.remove();
+	};
 
-function makeGrid() {
-  	// Your code goes here!
+	// create grid
+	tbody = document.createElement("tbody");
 
-  	// reset
-  	document.querySelector('#pixelCanvas').innerHTML = '';
-
-  	// fetch dimensions
-  	const height = document.querySelector('#inputHeight').value;
-	const width = document.querySelector('#inputWidth').value;
-
-  	// create table
-  	const tbody = document.createElement('tbody');
-
-  	for (i = 0; i < height; i++) {
-  		const tr = document.createElement('tr');
-
-		for (let j = 0; j < width; j++) {
-			const el = document.createElement('td');
-			tr.appendChild(el);
+	for (i = 0; i < height; i++) {
+		const row = tbody.insertRow(0);
+		for (j = 0; j < width; j++) {
+			const col = row.insertCell(0);
 		};
 
-		tbody.appendChild(tr);
+	// pick color
+	const color = {
+		pickedColor: document.querySelector("input[type=\"color\"]").value
 	};
-	
-	// add table to document
-	document.querySelector('#pixelCanvas').appendChild(tbody);
-	tbody.setAttribute("id", "evtContainer")
-};
 
-// picks color dynamically
-function pickColor() {
-	colorPicker.obj.addEventListener("change", function() {
-		colorPicker.color = document.querySelector('#colorPicker').value;
-		console.log(colorPicker.color);
-	});
-};
+	document.querySelector("input[type=\"color\"]").addEventListener("change", function() {
+		color.pickedColor = document.querySelector("input[type=\"color\"]").value;
+	});	
 
-// activates "paintbrush"
-function painter() {
-	const pixelCanvas = document.getElementById('evtContainer');
-	pixelCanvas.addEventListener("mousedown", function(e) {
+	// add painting functionality
+	tbody.addEventListener("click", function(e) {
 		e.stopPropagation();
-		e.target.style.backgroundColor = colorPicker.color;
-		console.log(colorPicker.color);
+		e.target.style.backgroundColor = color.pickedColor;
 	});
-};
 
-// main
-document.addEventListener("DOMContentLoaded", function() {
+	document.querySelector("#pixelCanvas").appendChild(tbody);
+	}
+}
 
-	// When size is submitted by the user, call all appropriate functions
-	button.addEventListener("click", function(e) {
-		e.preventDefault();
-		makeGrid();
-		pickColor();
-		painter();
-	});
-})
+const submit = document.querySelector("input[type=\"submit\"]");
+
+submit.addEventListener("click", function(e) {
+
+	const height = document.querySelector("#inputHeight").value;
+	const width = document.querySelector("#inputWidth").value;
+
+	e.preventDefault();
+	makeGrid(height, width);
+});
